@@ -1,19 +1,34 @@
 package com.swlp.controller;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@RestController
+import com.swlp.entity.Lecture;
+
+@Controller
 @RequestMapping("/")
-@CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8000"})
+@CrossOrigin
 public class HomeController {
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String apiUsageExamples(){
-		return "<h1 style=\"text-align:center;margin-top:10vh;font-family:sans-serif;\">"
-				+ "All api endpoints start with '/api' <hr>"
-				+ "Currently, only the '/api/lectures' endpoint is supported. <br>";
+	public String apiUsageExamples(@RequestParam(
+										name = "name", 
+										required = false, 
+										defaultValue = "World") 
+									String name, Model model) {
+		Lecture lecture = new Lecture();
+		lecture.setLectureName("Works!");
+		model.addAttribute("lecture", lecture);
+		return "index";
+	}
+
+	@RequestMapping(method = RequestMethod.POST)
+	public String greetingSubmit(@ModelAttribute Lecture lecture) {
+		return "result";
 	}
 }

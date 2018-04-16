@@ -1,6 +1,6 @@
 package com.swlp.controller;
 
-import java.util.Optional;
+import static com.swlp.Utils.anotherPrint;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,34 +15,42 @@ import com.swlp.service.LectureService;
 
 @RestController
 @RequestMapping("/api/lectures")
-@CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8000"})
+@CrossOrigin
 public class LectureController {
 
 	@Autowired
 	private LectureService lectureService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public Iterable<Lecture> getAllLectures(){
+	public Iterable<Lecture> getAllLectures() {
+		anotherPrint("=======================>>>>>>>>>>> Hello " + "world! \n" + 1);
 		return lectureService.findAll();
 	}
 
-	@RequestMapping(method=RequestMethod.GET, value="/{id}")
-	public Optional<Lecture> getLectureById(@PathVariable String id) {
-		return lectureService.findById(id);
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
+	public Lecture getLectureById(@PathVariable String id) {
+		if(lectureService.findById(id).isPresent()){
+			return lectureService.findById(id).get();
+		}else{
+			return null;
+		}
 	}
 
-	@RequestMapping(method=RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public String createNewLecture(@RequestBody Lecture lecture) {
-		return lectureService.save(lecture).getId();
+		System.out.println("Response Body >>>  " + lecture.toString());
+		//return "Done";
+		lectureService.save(lecture);
+		return "Done";
 	}
 
-	@RequestMapping(method=RequestMethod.PUT, value="/{id}")
-	public Lecture updateLecture(@PathVariable String id, @RequestBody Lecture lecture){
+	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+	public Lecture updateLecture(@PathVariable String id, @RequestBody Lecture lecture) {
 		return lectureService.update(id, lecture);
 	}
 
-	@RequestMapping(method=RequestMethod.DELETE, value="/{id}")
-	public String deleteLecture(@PathVariable String id){
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+	public String deleteLecture(@PathVariable String id) {
 		return lectureService.delete(id);
 	}
 }

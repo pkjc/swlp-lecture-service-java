@@ -14,38 +14,52 @@ public class Lecture {
 	private String lectureUrl;
 	private String lectureDesc;
 	private String lectureImage;
-	private List<RelatedResources> relatedResources;
-	private List<TaggedSections> taggedSections;
+	private TaggedSections taggedSections;
+	private List<Media> media;
 
 	public Lecture() {
+		super();
 	}
 
+	
+
 	public Lecture(String lectureName, String lectureUrl, String lectureDesc, String lectureImage,
-			List<RelatedResources> relatedResources, List<TaggedSections> taggedSections) {
+			TaggedSections taggedSections, List<Media> media) {
 		super();
 		this.lectureName = lectureName;
 		this.lectureUrl = lectureUrl;
 		this.lectureDesc = lectureDesc;
 		this.lectureImage = lectureImage;
-		this.relatedResources = relatedResources;
 		this.taggedSections = taggedSections;
+		this.media = media;
 	}
+	
+	
 
-	public List<TaggedSections> getTaggedSections() {
+
+	public TaggedSections getTaggedSections() {
 		return taggedSections;
 	}
 
-	public void setTaggedSections(List<TaggedSections> taggedSections) {
+
+
+	public void setTaggedSections(TaggedSections taggedSections) {
 		this.taggedSections = taggedSections;
 	}
 
-	public List<RelatedResources> getRelatedResources() {
-		return relatedResources;
+
+
+	public List<Media> getMedia() {
+		return media;
 	}
 
-	public void setRelatedResources(List<RelatedResources> relatedResources) {
-		this.relatedResources = relatedResources;
+
+
+	public void setMedia(List<Media> media) {
+		this.media = media;
 	}
+
+
 
 	public String getId() {
 		return id;
@@ -86,5 +100,4 @@ public class Lecture {
 	public void setLectureImage(String lectureImage) {
 		this.lectureImage = lectureImage;
 	}
-
 }
