@@ -1,7 +1,13 @@
 package com.swlp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Appearances {
+	@JsonProperty("startTime")
 	private String startTime;
+	@JsonProperty("endTime")
 	private String endTime;
 	public Appearances() {
 		super();

@@ -1,44 +1,73 @@
 package com.swlp.entity;
 
-import java.util.List;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Document(collection = "lectures")
 public class Lecture {
 
 	@Id
 	String id;
+	
 	private String lectureName;
 	private String lectureUrl;
 	private String lectureDesc;
 	private String lectureImage;
+	@JsonProperty("taggedSections")
 	private TaggedSections taggedSections;
-	private List<Media> media;
+	@JsonProperty("RelatedResources")
+	private RelatedResources relatedResources;
+	//private List<Media> media;
 
 	public Lecture() {
 		super();
 	}
 
-	
+
 
 	public Lecture(String lectureName, String lectureUrl, String lectureDesc, String lectureImage,
-			TaggedSections taggedSections, List<Media> media) {
+			TaggedSections taggedSections, RelatedResources relatedResources) {
 		super();
 		this.lectureName = lectureName;
 		this.lectureUrl = lectureUrl;
 		this.lectureDesc = lectureDesc;
 		this.lectureImage = lectureImage;
 		this.taggedSections = taggedSections;
-		this.media = media;
+		this.relatedResources = relatedResources;
 	}
-	
-	
+
+
+
+	//	public Lecture(String lectureName, String lectureUrl, String lectureDesc, String lectureImage,
+	//			TaggedSections taggedSections, List<Media> media) {
+	//		super();
+	//		this.lectureName = lectureName;
+	//		this.lectureUrl = lectureUrl;
+	//		this.lectureDesc = lectureDesc;
+	//		this.lectureImage = lectureImage;
+	//		this.taggedSections = taggedSections;
+	//		this.media = media;
+	//	}
+
+
 
 
 	public TaggedSections getTaggedSections() {
 		return taggedSections;
+	}
+
+
+
+	public RelatedResources getRelatedResources() {
+		return relatedResources;
+	}
+
+
+
+	public void setRelatedResources(RelatedResources relatedResources) {
+		this.relatedResources = relatedResources;
 	}
 
 
@@ -49,15 +78,15 @@ public class Lecture {
 
 
 
-	public List<Media> getMedia() {
-		return media;
-	}
-
-
-
-	public void setMedia(List<Media> media) {
-		this.media = media;
-	}
+//	public List<Media> getMedia() {
+//		return media;
+//	}
+//
+//
+//
+//	public void setMedia(List<Media> media) {
+//		this.media = media;
+//	}
 
 
 

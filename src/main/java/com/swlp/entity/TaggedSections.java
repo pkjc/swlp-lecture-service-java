@@ -3,13 +3,19 @@ package com.swlp.entity;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TaggedSections {
-
+	@JsonProperty("VideoId")
 	private String videoId;
+	@JsonProperty("VideoName")
 	private String videoName;
+	@JsonProperty("VideoURL")
 	private String videoUrl;
+	@JsonUnwrapped
+	@JsonProperty("Tags")
 	private List<Tags> tags;
 	public TaggedSections() {
 		super();

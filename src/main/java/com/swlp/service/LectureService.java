@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.swlp.entity.Lecture;
 import com.swlp.entity.Media;
+import com.swlp.entity.RelatedResources;
 import com.swlp.entity.TaggedSections;
 import com.swlp.repository.LectureRepository;
 
@@ -34,13 +35,16 @@ public class LectureService {
 		
 		//Get tags for this video
 		if(lecture.isPresent()){
-			lecture.get().setTaggedSections(getLectureTags(id));
+			//lecture.get().setTaggedSections(getLectureTags(id));
 		}
 		
 		//Get related resources for the returned tags
 		if(lecture.isPresent()){
-			lecture.get().setMedia((getRelatedResources(id)));
+			//lecture.get().setMedia((getRelatedResources(id)));
+			//lecture.get().setRelatedResources((getRelatedResources(id)));
 		}
+		
+		
 		return lecture;
 	}
 
@@ -80,9 +84,9 @@ public class LectureService {
 		}
 	}
 
-	public List<Media> getRelatedResources(String vidId){
+	public RelatedResources getRelatedResources(String vidId){
 		
-		final String uri = "https://swlp-resources-service.herokuapp.com/relatedresources/get/";
+		final String uri = "https://swlp-resources-service.herokuapp.com/relatedresources/get	";
 	     
 	    RestTemplate restTemplate = new RestTemplate();
 	    
@@ -93,7 +97,7 @@ public class LectureService {
 	    
 	    HttpEntity <String> httpEntity = new HttpEntity <String> (httpHeaders);
 	    
-	    ResponseEntity<List<Media>> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<Media>>() {});
+	    ResponseEntity<RelatedResources> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, RelatedResources.class);
 	     
 	    System.out.println("response.getStatusCode() - > " 
 	    + response.getStatusCode() 
@@ -107,13 +111,10 @@ public class LectureService {
 		final String uri = "http://videometadataawd20180410025538.azurewebsites.net/api/ValuesController/08da529a3f";
 	     
 	    RestTemplate restTemplate = new RestTemplate();
-	    
-	    ResponseEntity<TaggedSections> response = 
-	    		restTemplate.exchange(uri, HttpMethod.GET, null,TaggedSections.class);
-	     
-	    System.out.println("response.getStatusCode() - > " 
-	    + response.getStatusCode() 
-	    + "response.hasBody() - > " + response.getBody());
+	   
+	    ResponseEntity<TaggedSections> response = restTemplate.getForEntity(uri, TaggedSections.class);
+	    System.out.println("response.getStatusCode() - > " + response.getStatusCodeValue());
+	    System.out.println("response.getStatusCode() 2 - > " + response.getBody().getVideoId());
 		
 		return response.getBody();
 	}

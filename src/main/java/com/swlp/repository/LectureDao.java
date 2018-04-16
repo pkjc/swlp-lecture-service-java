@@ -16,9 +16,7 @@ public class LectureDao {
 		lectures = new HashMap<Integer, Lecture>(){
 			private static final long serialVersionUID = -1198867491991735227L;
 			{
-//				put(1, new Lecture("lec name 1", "lec url 1", "lec desc 1"));
-//				put(2, new Lecture("lec name 2", "lec url 2", "lec desc 2"));
-//				put(3, new Lecture("lec name 3", "lec url 3", "lec desc 3"));
+//				put(1, new Lecture("lec name 3", "lec url 3", "lec desc 3"));
 			}
 		};	
 	}

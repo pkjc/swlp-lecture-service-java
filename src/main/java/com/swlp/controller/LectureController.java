@@ -1,7 +1,5 @@
 package com.swlp.controller;
 
-import static com.swlp.Utils.anotherPrint;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +21,6 @@ public class LectureController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public Iterable<Lecture> getAllLectures() {
-		anotherPrint("=======================>>>>>>>>>>> Hello " + "world! \n" + 1);
 		return lectureService.findAll();
 	}
 

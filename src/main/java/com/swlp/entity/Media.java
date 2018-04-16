@@ -1,16 +1,25 @@
 package com.swlp.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Media{
-	String id;
-	String isbn;
-	String description;
-	String image;
-	String mediaType;
-	String similarityValue;
-	String title;
+	
+	@JsonProperty("description")
+	private String description;
+	@JsonProperty("ID")
+	private String id;
+	@JsonProperty("ISBN")
+	private String isbn;
+	@JsonProperty("image")
+	private String image;
+	@JsonProperty("mediaType")
+	private String mediaType;
+	@JsonProperty("similarityValue")
+	private String similarityValue;
+	@JsonProperty("title")
+	private String title;
 	public Media() {
 		super();
 	}
