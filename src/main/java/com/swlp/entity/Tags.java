@@ -7,10 +7,10 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Tags {
 	@JsonProperty("tagName")
-	public String tagName;
+	private String tagName;
 	@JsonUnwrapped
 	@JsonProperty("Appearances")
-	public List<Appearances> appearances;
+	private List<Appearances> appearances;
 	public Tags() {
 		super();
 		// TODO Auto-generated constructor stub

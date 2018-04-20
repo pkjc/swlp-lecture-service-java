@@ -16,6 +16,7 @@ import com.swlp.entity.Lecture;
 import com.swlp.entity.Media;
 import com.swlp.entity.RelatedResources;
 import com.swlp.entity.TaggedSections;
+import com.swlp.entity.Tags;
 import com.swlp.repository.LectureRepository;
 
 @Service
@@ -35,15 +36,10 @@ public class LectureService {
 		
 		//Get tags for this video
 		if(lecture.isPresent()){
-			//lecture.get().setTaggedSections(getLectureTags(id));
+			lecture.get().setTaggedSections(getLectureTags(id));
+			List<Tags> tags = lecture.get().getTaggedSections().getTags();
+			lecture.get().setRelatedResources((getRelatedResources(id, tags)));
 		}
-		
-		//Get related resources for the returned tags
-		if(lecture.isPresent()){
-			//lecture.get().setMedia((getRelatedResources(id)));
-			//lecture.get().setRelatedResources((getRelatedResources(id)));
-		}
-		
 		
 		return lecture;
 	}
@@ -84,14 +80,14 @@ public class LectureService {
 		}
 	}
 
-	public RelatedResources getRelatedResources(String vidId){
+	public RelatedResources getRelatedResources(String vidId, List<Tags> tags){
 		
 		final String uri = "https://swlp-resources-service.herokuapp.com/relatedresources/get	";
 	     
 	    RestTemplate restTemplate = new RestTemplate();
 	    
 	    HttpHeaders httpHeaders = new HttpHeaders();
-	    httpHeaders.set("tags", "object oriented programming language");
+	    httpHeaders.set("tags", tags.get(0).getTagName());
 	    httpHeaders.set("limit", "2");
 	    httpHeaders.set("key", "csi5510swlp");
 	    
