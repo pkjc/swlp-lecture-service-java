@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.swlp.entity.Lecture;
-import com.swlp.entity.Media;
 import com.swlp.entity.RelatedResources;
 import com.swlp.entity.TaggedSections;
 import com.swlp.entity.Tags;
@@ -107,7 +105,7 @@ public class LectureService {
 
 	public TaggedSections getLectureTags(String vidId) {
 
-		final String uri = "http://videometadataawd20180410025538.azurewebsites.net/api/ValuesController/08da529a3f";
+		final String uri = "http://videometadataawd20180410025538.azurewebsites.net/api/MetatagsController/9a2dab6aa4";
 
 		RestTemplate restTemplate = new RestTemplate();
 
