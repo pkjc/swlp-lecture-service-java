@@ -8,11 +8,11 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TaggedSections {
-	@JsonProperty("VideoId")
+	@JsonProperty("videoId")
 	private String videoId;
-	@JsonProperty("VideoName")
+	@JsonProperty("videoName")
 	private String videoName;
-	@JsonProperty("VideoURL")
+	@JsonProperty("videoURL")
 	private String videoUrl;
 	@JsonUnwrapped
 	@JsonProperty("Tags")
