@@ -83,7 +83,7 @@ public class LectureService {
 
 	public RelatedResources getRelatedResources(String vidId, List<Tags> tags) {
 
-		final String uri = "https://swlp-resources-service.herokuapp.com/relatedresources/get	";
+		final String uri = "https://swlp-resources-service.herokuapp.com/relatedresources/get";
 
 		RestTemplate restTemplate = new RestTemplate();
 
