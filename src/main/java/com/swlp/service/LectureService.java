@@ -27,7 +27,12 @@ public class LectureService {
 	private LectureRepository lectureRepository;
 
 	public Iterable<Lecture> findAll() {
+		
 		Iterable<Lecture> lectures = lectureRepository.findAll();
+		
+		for (Lecture lecture : lectures) {
+			lecture.setTaggedSections(getLectureTags(lecture.getId()));  
+		}
 
 		return lectures;
 	}

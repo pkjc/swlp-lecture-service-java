@@ -3,3 +3,5 @@
 [21/Apr/2018:13:52:28 -0400] 0:0:0:0:0:0:0:1 "GET /api/lectures/5ad51be90b2da83c29b38e4b HTTP/1.1" 200 (1881 ms)
 [21/Apr/2018:16:14:08 -0400] 0:0:0:0:0:0:0:1 "GET /api/lectures/ HTTP/1.1" 200 (735 ms)
 [21/Apr/2018:16:14:21 -0400] 0:0:0:0:0:0:0:1 "GET /api/lectures/5ad51be90b2da83c29b38e4b HTTP/1.1" 200 (2183 ms)
+[21/Apr/2018:16:49:26 -0400] 0:0:0:0:0:0:0:1 "GET /api/lectures/ HTTP/1.1" 200 (2928 ms)
+[21/Apr/2018:16:49:55 -0400] 0:0:0:0:0:0:0:1 "GET /api/lectures/5ad51be90b2da83c29b38e4b HTTP/1.1" 200 (2154 ms)
