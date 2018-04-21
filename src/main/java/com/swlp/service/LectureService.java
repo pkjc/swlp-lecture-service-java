@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -27,20 +30,20 @@ public class LectureService {
 
 	public Iterable<Lecture> findAll() {
 		Iterable<Lecture> lectures = lectureRepository.findAll();
-		
+
 		return lectures;
 	}
 
 	public Optional<Lecture> findById(String id) {
 		Optional<Lecture> lecture = lectureRepository.findById(id);
-		
-		//Get tags for this video
-		if(lecture.isPresent()){
+
+		// Get tags for this video
+		if (lecture.isPresent()) {
 			lecture.get().setTaggedSections(getLectureTags(id));
 			List<Tags> tags = lecture.get().getTaggedSections().getTags();
 			lecture.get().setRelatedResources((getRelatedResources(id, tags)));
 		}
-		
+
 		return lecture;
 	}
 
@@ -51,67 +54,76 @@ public class LectureService {
 	public Lecture update(String id, Lecture lectureUpdated) {
 		Optional<Lecture> lectureFromDB = lectureRepository.findById(id);
 
-		if(lectureFromDB.isPresent() && lectureUpdated != null){
-			if(lectureUpdated.getLectureName() != null){
+		if (lectureFromDB.isPresent() && lectureUpdated != null) {
+			if (lectureUpdated.getLectureName() != null) {
 				lectureFromDB.get().setLectureName(lectureUpdated.getLectureName());
 			}
-			if(lectureUpdated.getLectureDesc() != null){
+			if (lectureUpdated.getLectureDesc() != null) {
 				lectureFromDB.get().setLectureDesc(lectureUpdated.getLectureDesc());
 			}
-			if(lectureUpdated.getLectureUrl() != null){
+			if (lectureUpdated.getLectureUrl() != null) {
 				lectureFromDB.get().setLectureUrl(lectureUpdated.getLectureUrl());
 			}
-			if(lectureUpdated.getLectureImage() != null){
+			if (lectureUpdated.getLectureImage() != null) {
 				lectureFromDB.get().setLectureImage(lectureUpdated.getLectureImage());
 			}
 			return lectureRepository.save(lectureFromDB.get());
-		}else {
+		} else {
 			return null;
 		}
 	}
 
 	public String delete(String id) {
 		Optional<Lecture> lectureFromDB = lectureRepository.findById(id);
-		if(lectureFromDB.isPresent()){
+		if (lectureFromDB.isPresent()) {
 			lectureRepository.delete(lectureFromDB.get());
 			return "Lecture Deleted!";
-		}else{
+		} else {
 			return "Lecture Not Found";
 		}
 	}
 
-	public RelatedResources getRelatedResources(String vidId, List<Tags> tags){
-		
+	public RelatedResources getRelatedResources(String vidId, List<Tags> tags) {
+
 		final String uri = "https://swlp-resources-service.herokuapp.com/relatedresources/get	";
-	     
-	    RestTemplate restTemplate = new RestTemplate();
-	    
-	    HttpHeaders httpHeaders = new HttpHeaders();
-	    httpHeaders.set("tags", tags.get(0).getTagName());
-	    httpHeaders.set("limit", "2");
-	    httpHeaders.set("key", "csi5510swlp");
-	    
-	    HttpEntity <String> httpEntity = new HttpEntity <String> (httpHeaders);
-	    
-	    ResponseEntity<RelatedResources> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, RelatedResources.class);
-	     
-	    System.out.println("response.getStatusCode() - > " 
-	    + response.getStatusCode() 
-	    + "response.hasBody() - > " + response.getBody());
-		
+
+		RestTemplate restTemplate = new RestTemplate();
+
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.set("tags", tags.get(0).getTagName());
+		httpHeaders.set("limit", "2");
+		httpHeaders.set("key", "csi5510swlp");
+
+		HttpEntity<String> httpEntity = new HttpEntity<String>(httpHeaders);
+
+		ResponseEntity<RelatedResources> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity,
+				RelatedResources.class);
+
+		System.out.println("response.getStatusCode() - > " + response.getStatusCode() + "response.hasBody() - > "
+				+ response.getBody());
+
 		return response.getBody();
 	}
 
-	public TaggedSections getLectureTags(String vidId){
-		
+	public TaggedSections getLectureTags(String vidId) {
+
 		final String uri = "http://videometadataawd20180410025538.azurewebsites.net/api/ValuesController/08da529a3f";
-	     
-	    RestTemplate restTemplate = new RestTemplate();
-	   
-	    ResponseEntity<TaggedSections> response = restTemplate.getForEntity(uri, TaggedSections.class);
-	    System.out.println("response.getStatusCode() - > " + response.getStatusCodeValue());
-	    System.out.println("response.getStatusCode() 2 - > " + response.getBody().getVideoId());
-		
+
+		RestTemplate restTemplate = new RestTemplate();
+
+		ResponseEntity<TaggedSections> response = restTemplate.getForEntity(uri, TaggedSections.class);
+		System.out.println("response.getStatusCode() - > " + response.getStatusCodeValue());
+		System.out.println("response.getStatusCode() 2 - > " + response.getBody().getVideoId());
+
 		return response.getBody();
+	}
+
+}
+
+@Configuration
+class AppConfig {
+	@Bean
+	public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
+		return restTemplateBuilder.setConnectTimeout(120000).build();
 	}
 }
